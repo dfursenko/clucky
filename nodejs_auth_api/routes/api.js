@@ -10,10 +10,16 @@ const tagsRouter = require('./tags');
 const votesRouter = require('./votes');
 
 router.use('/*', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', req.headers['origin'] || '*');
+  res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'DELETE, PUT, HEAD, OPTIONS, GET, POST');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-access-token, User-Agent');
-  next();
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Access-Token, User-Agent');
+  res.header('Access-Control-Max-Age', config.jwt.access.expiresIn);
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
 });
 
 router.use('/auth', authRouter);
