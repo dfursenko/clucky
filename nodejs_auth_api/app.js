@@ -14,7 +14,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.disable('x-powered-by');
 
-app.use('/', apiRouter);
+app.use('/api', apiRouter);
+app.use('/', express.static('build'));
 
 app.set('port', config.server.port);
 app.set('secure_port', config.server.secure_port);

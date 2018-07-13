@@ -10,7 +10,7 @@ const attributes = ['id', 'name'];
 
 router.use(auth(config.jwt.access));
 
-router.get('/tags', (req, res, next) => {
+router.get('/', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Tag.findAll({
     attributes,
@@ -33,7 +33,7 @@ router.get('/tags', (req, res, next) => {
   });
 });
 
-router.get('/tags/:id(\\d+)', (req, res, next) => {
+router.get('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Tag.findById(req.params.id, { attributes })
     .then((tag) => {
@@ -53,7 +53,7 @@ router.get('/tags/:id(\\d+)', (req, res, next) => {
     });
 });
 
-router.get('/tags/:id(\\d+)/questions', (req, res, next) => {
+router.get('/:id(\\d+)/questions', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Tag.findById(req.params.id, {
     include: [{
@@ -79,7 +79,7 @@ router.get('/tags/:id(\\d+)/questions', (req, res, next) => {
   });
 });
 
-router.post('/tags', (req, res, next) => {
+router.post('/', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   req.body.user_id = req.body.user_id || req.authPayload.id;
   Tag.create(req.body).then(({ id, name }) => {
@@ -94,7 +94,7 @@ router.post('/tags', (req, res, next) => {
   });
 });
 
-router.post('/tags/:id(\\d+)/questions/:qid(\\d+)/set', (req, res, next) => {
+router.post('/:id(\\d+)/questions/:qid(\\d+)/set', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Tag.findById(req.params.id).then((tag) => {
     if (tag) {
@@ -118,7 +118,7 @@ router.post('/tags/:id(\\d+)/questions/:qid(\\d+)/set', (req, res, next) => {
   });
 });
 
-router.post('/tags/:id(\\d+)/questions/:qid(\\d+)/del', (req, res, next) => {
+router.post('/:id(\\d+)/questions/:qid(\\d+)/del', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Tag.findById(req.params.id).then((tag) => {
     if (tag) {
@@ -142,7 +142,7 @@ router.post('/tags/:id(\\d+)/questions/:qid(\\d+)/del', (req, res, next) => {
   });
 });
 
-router.put('/tags/:id(\\d+)', (req, res, next) => {
+router.put('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Tag.findById(req.params.id).then((tag) => {
     if (tag) {
@@ -166,7 +166,7 @@ router.put('/tags/:id(\\d+)', (req, res, next) => {
   });
 });
 
-router.delete('/tags/:id(\\d+)', (req, res, next) => {
+router.delete('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Tag.findById(req.params.id).then((tag) => {
     if (tag) {

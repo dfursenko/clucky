@@ -12,7 +12,7 @@ const attributes = ['id', 'answer', 'user_id', 'question_id'];
 
 router.use(auth(config.jwt.access));
 
-router.get('/answers', (req, res, next) => {
+router.get('/', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Answer.findAll({
     attributes,
@@ -35,7 +35,7 @@ router.get('/answers', (req, res, next) => {
   });
 });
 
-router.get('/answers/:id(\\d+)', (req, res, next) => {
+router.get('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Answer.findById(req.params.id, { attributes })
     .then((answer) => {
@@ -55,7 +55,7 @@ router.get('/answers/:id(\\d+)', (req, res, next) => {
     });
 });
 
-router.get('/answers/:id(\\d+)/votes', (req, res, next) => {
+router.get('/:id(\\d+)/votes', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Vote.findAll({
     where: { answer_id: req.params.id },
@@ -79,7 +79,7 @@ router.get('/answers/:id(\\d+)/votes', (req, res, next) => {
   });
 });
 
-router.get('/answers/:id(\\d+)/votes/counts', (req, res, next) => {
+router.get('/:id(\\d+)/votes/counts', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   const Sequelize = Answer.sequelize;
   const { QueryTypes } = Sequelize;
@@ -106,7 +106,7 @@ router.get('/answers/:id(\\d+)/votes/counts', (req, res, next) => {
   });
 });
 
-router.get('/answers/:id(\\d+)/user', (req, res, next) => {
+router.get('/:id(\\d+)/user', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Answer.findById(req.params.id, {
     include: [{ model: User, attributes: ['id', 'login', 'email', 'status'] }],
@@ -128,7 +128,7 @@ router.get('/answers/:id(\\d+)/user', (req, res, next) => {
   });
 });
 
-router.get('/answers/:id(\\d+)/question', (req, res, next) => {
+router.get('/:id(\\d+)/question', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Answer.findById(req.params.id, {
     include: [{ model: Question, attributes: ['id', 'subject', 'question', 'views'] }],
@@ -150,7 +150,7 @@ router.get('/answers/:id(\\d+)/question', (req, res, next) => {
   });
 });
 
-router.post('/answers/:id(\\d+)/votes/users/:uid(\\d+)/like', (req, res, next) => {
+router.post('/:id(\\d+)/votes/users/:uid(\\d+)/like', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Vote.findOrCreate({
     where: { user_id: req.params.uid },
@@ -178,7 +178,7 @@ router.post('/answers/:id(\\d+)/votes/users/:uid(\\d+)/like', (req, res, next) =
   });
 });
 
-router.post('/answers/:id(\\d+)/votes/users/:uid(\\d+)/dislike', (req, res, next) => {
+router.post('/:id(\\d+)/votes/users/:uid(\\d+)/dislike', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Vote.findOrCreate({
     where: { user_id: req.params.uid },
@@ -206,7 +206,7 @@ router.post('/answers/:id(\\d+)/votes/users/:uid(\\d+)/dislike', (req, res, next
   });
 });
 
-router.post('/answers', (req, res, next) => {
+router.post('/', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   req.body.user_id = req.body.user_id || req.authPayload.id;
   Answer.create(req.body)
@@ -222,7 +222,7 @@ router.post('/answers', (req, res, next) => {
     });
 });
 
-router.put('/answers/:id(\\d+)', (req, res, next) => {
+router.put('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Answer.findById(req.params.id)
     .then((answer) => {
@@ -252,7 +252,7 @@ router.put('/answers/:id(\\d+)', (req, res, next) => {
     });
 });
 
-router.delete('/answers/:id(\\d+)', (req, res, next) => {
+router.delete('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Answer.findById(req.params.id)
     .then((answer) => {

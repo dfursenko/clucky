@@ -24,7 +24,7 @@ const createTokens = (req, user) => {
   };
 };
 
-router.post('/auth/register', (req, res, next) => {
+router.post('/register', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   let login = req.body.login;
   let password = req.body.password;
@@ -51,7 +51,7 @@ router.post('/auth/register', (req, res, next) => {
   });
 });
 
-router.post('/auth/login', (req, res, next) => {
+router.post('/login', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   let login = req.body.login || req.body.email;
   let password = req.body.password;
@@ -80,7 +80,7 @@ router.post('/auth/login', (req, res, next) => {
   });
 });
 
-router.post('/auth/refresh', auth(config.jwt.refresh), (req, res, next) => {
+router.post('/refresh', auth(config.jwt.refresh), (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   User.findOne({
     where: {
@@ -109,7 +109,7 @@ router.post('/auth/refresh', auth(config.jwt.refresh), (req, res, next) => {
   });
 });
 
-router.post('/auth/logout', auth(config.jwt.access), (req, res, next) => {
+router.post('/logout', auth(config.jwt.access), (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   User.findOne({
     where: {

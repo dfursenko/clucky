@@ -13,7 +13,7 @@ const attributes = ['id', 'subject', 'question', 'views'];
 
 router.use(auth(config.jwt.access));
 
-router.get('/questions', (req, res, next) => {
+router.get('/', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Question.findAll({
     attributes,
@@ -36,7 +36,7 @@ router.get('/questions', (req, res, next) => {
   });
 });
 
-router.get('/questions/:id(\\d+)', (req, res, next) => {
+router.get('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Question.findById(req.params.id, { attributes })
     .then((question) => {
@@ -56,7 +56,7 @@ router.get('/questions/:id(\\d+)', (req, res, next) => {
     });
 });
 
-router.get('/questions/:id(\\d+)/answers', (req, res, next) => {
+router.get('/:id(\\d+)/answers', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Answer.findAll({
     where: { question_id: req.params.id },
@@ -80,7 +80,7 @@ router.get('/questions/:id(\\d+)/answers', (req, res, next) => {
   });
 });
 
-router.get('/questions/:id(\\d+)/user', (req, res, next) => {
+router.get('/:id(\\d+)/user', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Question.findById(req.params.id, {
     include: [{ model: User, attributes: ['id', 'login', 'email', 'status'] }],
@@ -102,7 +102,7 @@ router.get('/questions/:id(\\d+)/user', (req, res, next) => {
   });
 });
 
-router.get('/questions/:id(\\d+)/categories', (req, res, next) => {
+router.get('/:id(\\d+)/categories', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Question.findById(req.params.id, {
     include: [{ model: Category, through: { attributes: [] }, attributes: ['id', 'name'] }],
@@ -124,7 +124,7 @@ router.get('/questions/:id(\\d+)/categories', (req, res, next) => {
   });
 });
 
-router.get('/questions/:id(\\d+)/tags', (req, res, next) => {
+router.get('/:id(\\d+)/tags', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Question.findById(req.params.id, {
     include: [{ model: Tag, through: { attributes: [] }, attributes: ['id', 'name'] }],
@@ -146,7 +146,7 @@ router.get('/questions/:id(\\d+)/tags', (req, res, next) => {
   });
 });
 
-router.post('/questions/:id(\\d+)/views/inc', (req, res, next) => {
+router.post('/:id(\\d+)/views/inc', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Question.findById(req.params.id).then((question) => {
     if (question) {
@@ -170,7 +170,7 @@ router.post('/questions/:id(\\d+)/views/inc', (req, res, next) => {
   });
 });
 
-router.post('/questions', (req, res, next) => {
+router.post('/', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   req.body.user_id = req.body.user_id || req.authPayload.id;
   Question.create(req.body)
@@ -185,7 +185,7 @@ router.post('/questions', (req, res, next) => {
     });
 });
 
-router.put('/questions/:id(\\d+)', (req, res, next) => {
+router.put('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Question.findById(req.params.id)
     .then((question) => {
@@ -215,7 +215,7 @@ router.put('/questions/:id(\\d+)', (req, res, next) => {
     });
 });
 
-router.delete('/questions/:id(\\d+)', (req, res, next) => {
+router.delete('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Question.findById(req.params.id)
     .then((question) => {

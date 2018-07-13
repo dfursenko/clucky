@@ -9,7 +9,7 @@ const attributes = ['id', 'vote', 'answer_id'];
 
 router.use(auth(config.jwt.access));
 
-router.get('/votes', (req, res, next) => {
+router.get('/', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Vote.findAll({
     attributes,

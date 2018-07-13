@@ -12,7 +12,7 @@ const attributes = ['id', 'login', 'email', 'status'];
 
 router.use(auth(config.jwt.access));
 
-router.get('/users', (req, res, next) => {
+router.get('/', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   User.findAll({
     attributes,
@@ -35,7 +35,7 @@ router.get('/users', (req, res, next) => {
   });
 });
 
-router.get('/users/:id(\\d+)', (req, res, next) => {
+router.get('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   User.findById(req.params.id, { attributes })
     .then((user) => {
@@ -55,7 +55,7 @@ router.get('/users/:id(\\d+)', (req, res, next) => {
     });
 });
 
-router.get('/users/:id(\\d+)/answers', (req, res, next) => {
+router.get('/:id(\\d+)/answers', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Answer.findAll({
     where: { user_id: req.params.id },
@@ -79,7 +79,7 @@ router.get('/users/:id(\\d+)/answers', (req, res, next) => {
   });
 });
 
-router.get('/users/:id(\\d+)/questions', (req, res, next) => {
+router.get('/:id(\\d+)/questions', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Question.findAll({
     where: { user_id: req.params.id },
@@ -103,7 +103,7 @@ router.get('/users/:id(\\d+)/questions', (req, res, next) => {
   });
 });
 
-router.post('/users', (req, res, next) => {
+router.post('/', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   let login = req.body.login;
   let password = req.body.password;
@@ -130,7 +130,7 @@ router.post('/users', (req, res, next) => {
   });
 });
 
-router.put('/users/:id(\\d+)', (req, res, next) => {
+router.put('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   if (req.authPayload.id !== +req.params.id) {
     let err = new Error('Сan not update account of another user');
@@ -161,7 +161,7 @@ router.put('/users/:id(\\d+)', (req, res, next) => {
     });
 });
 
-router.delete('/users/:id(\\d+)', (req, res, next) => {
+router.delete('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   if (req.authPayload.id !== +req.params.id) {
     let err = new Error('Сan not delete account of another user');
