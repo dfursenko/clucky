@@ -10,7 +10,7 @@ const attributes = ['id', 'name'];
 
 router.use(auth(config.jwt.access));
 
-router.get('/categories', (req, res, next) => {
+router.get('/', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Category.findAll({
     attributes,
@@ -33,7 +33,7 @@ router.get('/categories', (req, res, next) => {
   });
 });
 
-router.get('/categories/:id(\\d+)', (req, res, next) => {
+router.get('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Category.findById(req.params.id, { attributes })
     .then((category) => {
@@ -53,7 +53,7 @@ router.get('/categories/:id(\\d+)', (req, res, next) => {
     });
 });
 
-router.get('/categories/:id(\\d+)/questions', (req, res, next) => {
+router.get('/:id(\\d+)/questions', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Category.findById(req.params.id, {
     include: [{
@@ -79,7 +79,7 @@ router.get('/categories/:id(\\d+)/questions', (req, res, next) => {
   });
 });
 
-router.post('/categories', (req, res, next) => {
+router.post('/', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   req.body.user_id = req.body.user_id || req.authPayload.id;
   Category.create(req.body)
@@ -95,7 +95,7 @@ router.post('/categories', (req, res, next) => {
     });
 });
 
-router.post('/categories/:id(\\d+)/questions/:qid(\\d+)/set', (req, res, next) => {
+router.post('/:id(\\d+)/questions/:qid(\\d+)/set', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Category.findById(req.params.id)
     .then((category) => {
@@ -120,7 +120,7 @@ router.post('/categories/:id(\\d+)/questions/:qid(\\d+)/set', (req, res, next) =
     });
 });
 
-router.post('/categories/:id(\\d+)/questions/:qid(\\d+)/del', (req, res, next) => {
+router.post('/:id(\\d+)/questions/:qid(\\d+)/del', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Category.findById(req.params.id)
     .then((category) => {
@@ -145,7 +145,7 @@ router.post('/categories/:id(\\d+)/questions/:qid(\\d+)/del', (req, res, next) =
     });
 });
 
-router.put('/categories/:id(\\d+)', (req, res, next) => {
+router.put('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Category.findById(req.params.id)
     .then((category) => {
@@ -170,7 +170,7 @@ router.put('/categories/:id(\\d+)', (req, res, next) => {
     });
 });
 
-router.delete('/categories/:id(\\d+)', (req, res, next) => {
+router.delete('/:id(\\d+)', (req, res, next) => {
   const formattedSend = getFormattedSender(res);
   Category.findById(req.params.id)
     .then((category) => {
